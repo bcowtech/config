@@ -1,3 +1,3 @@
 package config
 
-type UnmarshalFunc func(buffer []byte, target interface{}) error
+type Unmarshal func(buffer []byte, target interface{}) error

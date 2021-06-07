@@ -79,7 +79,7 @@ func (service *ConfigurationService) LoadResource(baseDir string) *Configuration
 	return service
 }
 
-func (service *ConfigurationService) LoadFile(fullpath string, unmarshal UnmarshalFunc) *ConfigurationService {
+func (service *ConfigurationService) LoadFile(fullpath string, unmarshal Unmarshal) *ConfigurationService {
 	path := os.ExpandEnv(fullpath)
 	buffer, err := ioutil.ReadFile(path)
 	if err != nil && os.IsExist(err) {
@@ -93,7 +93,7 @@ func (service *ConfigurationService) LoadFile(fullpath string, unmarshal Unmarsh
 	return nil
 }
 
-func (service *ConfigurationService) LoadBytes(buffer []byte, unmarshal UnmarshalFunc) *ConfigurationService {
+func (service *ConfigurationService) LoadBytes(buffer []byte, unmarshal Unmarshal) *ConfigurationService {
 	err := unmarshal(buffer, service.target)
 	if err != nil {
 		panic(fmt.Errorf("config: %#v\n", err))
