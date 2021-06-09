@@ -17,15 +17,14 @@ func Process(prefix string, target interface{}) error {
 		prefix += "_"
 	}
 
-	prototype, err := structproto.Prototypify(target, &structproto.StructProtoOption{
-		TagName:             TagName,
-		ValueBinderProvider: valuebinder.BuildStringArgsBinder,
+	prototype, err := structproto.Prototypify(target, &structproto.StructProtoResolveOption{
+		TagName: TagName,
 	})
 	if err != nil {
 		return err
 	}
 
-	var table structproto.NamedValues = make(structproto.NamedValues)
+	var table structproto.FieldValueMap = make(structproto.FieldValueMap)
 	for _, e := range os.Environ() {
 		parts := strings.SplitN(e, "=", 2)
 		name, value := parts[0], parts[1]
@@ -33,7 +32,7 @@ func Process(prefix string, target interface{}) error {
 			table[name[len(prefix):]] = value
 		}
 	}
-	err = prototype.BindValues(table)
+	err = prototype.BindValues(table, valuebinder.BuildStringArgsBinder)
 	if err != nil {
 		return err
 	}

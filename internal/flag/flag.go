@@ -17,7 +17,7 @@ var (
 )
 
 func Process(target interface{}) error {
-	prototype, err := structproto.Prototypify(target, &structproto.StructProtoOption{
+	prototype, err := structproto.Prototypify(target, &structproto.StructProtoResolveOption{
 		TagName: TagName,
 	})
 	if err != nil {
