@@ -19,7 +19,7 @@ func Process(baseDir string, target interface{}) error {
 		}
 	}
 
-	prototype, err := structproto.Prototypify(target, &structproto.StructProtoOption{
+	prototype, err := structproto.Prototypify(target, &structproto.StructProtoResolveOption{
 		TagName:     TagName,
 		TagResolver: ResourceTagResolver,
 	})
